@@ -1,0 +1,80 @@
+subprojects {
+    apply plugin: 'com.android.application'
+
+    android {
+        compileOptions.encoding = "UTF-8"
+        version = project.APP_VERSION
+
+        compileSdkVersion ANDROID_BUILD_SDK_VERSION
+        buildToolsVersion ANDROID_BUILD_TOOL_VERSION
+
+        defaultConfig {
+            minSdkVersion ANDROID_BUILD_MIN_SDK_VERSION
+            targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION
+            versionCode Integer.parseInt(project.APP_VERSION)
+            versionName project.APP_VERSION_NAME
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+
+        buildTypes {
+            debug {
+                debuggable true
+//                minifyEnabled true
+                zipAlignEnabled true
+//                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        flavorDimensions 'phase'
+
+        productFlavors {
+            dev {
+                dimension 'phase'
+            }
+
+            sandbox {
+                dimension 'phase'
+            }
+
+            cbt {
+                dimension 'phase'
+            }
+
+            production {
+                dimension 'phase'
+            }
+        }
+
+        variantFilter { variant ->
+            String phase = variant.flavors.find { it.dimension == 'phase'}.name
+            if (variant.buildType.name == 'release') {
+                setIgnore(true)
+            }
+            // Do not change this line because zipFullSource task depends on this line.
+            if (project.hasProperty('DEFAULT_PHASE') && phase != project.DEFAULT_PHASE) { setIgnore(true) }
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        lintOptions {
+            checkReleaseBuilds true
+            abortOnError false
+            checkAllWarnings true
+            xmlReport true
+            htmlReport true
+            disable "InvalidPackage", "MissingTranslation"
+        }
+
+        packagingOptions {
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
+            exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
+        }
+    }
+
+    preBuild.dependsOn rootProject.bumpVersionInProperties
+}

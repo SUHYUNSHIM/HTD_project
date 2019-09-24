@@ -1,0 +1,25 @@
+# 조직명(최소단위)
+org: API플랫폼파트
+# 프로젝트명
+proj: kakao-open-android-sdk
+# 프로젝트 소개
+proj_desc: 카카오 API 사용을 위한 안드로이드 SDK
+# 담당자
+contact: kevin.kang richard.jeon lucas.arts
+# Github 주소 (포크 떠온 경우만 기입)
+src_github: N/A
+# 프로젝트 상태 (Release, Pre-release, Personal)
+status: Release
+# 서비스 도메인 네임 (real만)
+dns_name: developers.kakao.com
+# 아지트 주소
+agit_url: https://kakao.agit.in/g/433879/wall
+# 지라 주소
+jira_url: https://jira.daumkakao.com/projects/OTF
+# 위키 주소
+wiki_url: https://github.daumkakao.com/kops/kakao-open-android-sdk/wiki, https://wiki.daumkakao.com/display/otf
+# 스킬셋
+skills:
+  - android
+  - java
+  - gradle
